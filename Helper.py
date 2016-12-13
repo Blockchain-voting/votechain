@@ -32,11 +32,8 @@ class Helper():
             election_hashes.append(chain_hashes)
 
         election_active = []
-        print len(election.active_tree.leaves)
         if len(election.active_tree.leaves) > 0:
-            print election.active_tree.leaves
             for vote in election.active_tree.leaves:
-                print vote.value
                 election_active.append(vote.value)
 
         return_dict = {'name': election.name, 'id': election.id, 'options':election.options, 'chain':election_hashes, 'active':election_active}
