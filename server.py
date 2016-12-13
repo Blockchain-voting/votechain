@@ -25,6 +25,7 @@ def elections():
     if request.method == 'GET':
         print 'returning %s Elections' % (len(Elections))
         return jsonify(helper.convert_elections(Elections))
+
     elif request.method == 'POST':
         if request.get_json:
             election_data = helper.strip_unicode(request.get_json())
@@ -36,18 +37,12 @@ def elections():
         print 'Election created with name %s and id of %s' % (el_handler.name, el_handler.id)
         return jsonify(helper.convert_elections(Elections))
 
-@app.route('/elections/<int:e_id>', methods=['GET'])
-def election_data_id(e_id):
-    election_temp = Elections[e_id]
+@app.route('/elections/<int:election_id>', methods=['GET'])
+def election_data_id(election_id):
+    print "Election %s" % election_id
+    election_temp = Elections[election_id - 1]
     election_data = helper.return_election_data(election_temp)
-    print "Election name: %s" % (election_data)
     return jsonify(election_data)
-
-@app.route('/elections/<e_name>', methods=['POST'])
-def election_data_name(e_name):
-    print e_name
-    # return jsonify(helper.convert_elections(Elections[e_id]))
-    return jsonify({'name':e_name})
 
 @app.route('/vote', methods=['POST'])
 def vote():
@@ -62,4 +57,5 @@ def vote():
     return jsonify(vote_hash)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+    app.run(host='0.0.0.0')
