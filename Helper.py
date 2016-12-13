@@ -1,4 +1,5 @@
 class Helper():
+
     def strip_unicode(self, json):
         new_dict = {}
         for key in json:
@@ -20,3 +21,24 @@ class Helper():
             temp_data['options'] = elections[i].options
             return_data[i] = temp_data
         return return_data
+
+    def return_election_data(self, election):
+
+        election_hashes = []
+        for chain in election.chain:
+            chain_hashes = []
+            for vote in chain.leaves:
+                chain_hashes.append(vote.value)
+            election_hashes.append(chain_hashes)
+
+        election_active = []
+        print len(election.active_tree.leaves)
+        if len(election.active_tree.leaves) > 0:
+            print election.active_tree.leaves
+            for vote in election.active_tree.leaves:
+                print vote.value
+                election_active.append(vote.value)
+
+        return_dict = {'name': election.name, 'id': election.id, 'options':election.options, 'chain':election_hashes, 'active':election_active}
+
+        return return_dict

@@ -36,11 +36,12 @@ def elections():
         print 'Election created with name %s and id of %s' % (el_handler.name, el_handler.id)
         return jsonify(helper.convert_elections(Elections))
 
-@app.route('/elections/<int:e_id>', methods=['POST'])
+@app.route('/elections/<int:e_id>', methods=['GET'])
 def election_data_id(e_id):
-    print e_id
-    # return jsonify(helper.convert_elections(Elections))
-    return jsonify({'id':e_id})
+    election_temp = Elections[e_id]
+    election_data = helper.return_election_data(election_temp)
+    print "Election name: %s" % (election_data)
+    return jsonify(election_data)
 
 @app.route('/elections/<e_name>', methods=['POST'])
 def election_data_name(e_name):
@@ -57,8 +58,8 @@ def vote():
     vote = Vote(vote_dict.get('election'), vote_dict.get('options'), vote_dict.get('userPublicKey'))
     election = Elections[vote.id]
     # print 'vote request:', vote, election.name
-    election.vote(vote)
-    return jsonify(request.get_json())
+    vote_hash = election.vote(vote)
+    return jsonify(vote_hash)
 
 if __name__ == '__main__':
     app.run(debug=True)
