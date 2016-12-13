@@ -13,9 +13,9 @@ class Merkle:
         print self.__length()
 
         if self.__length() == self.cap_size:
-            return "full"
+            return "full", node.value
         else:
-            return "growing"
+            return "growing", node.value
 
     def get_values(self):
         output_str = ''

@@ -19,8 +19,9 @@ class Handler:
     # need to get the id of the tree
     def vote(self, v):
         return_str = self.active_tree.add_leaf(v)
-        if return_str == "full":
+        if return_str[0] == "full":
             self.cap_tree()
+        return return_str[1] #return hash of vote
 
     # if tree is length of 10
     def cap_tree(self):
