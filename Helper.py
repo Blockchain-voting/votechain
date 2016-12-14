@@ -28,13 +28,15 @@ class Helper():
         for chain in election.chain:
             chain_hashes = []
             for vote in chain.leaves:
-                chain_hashes.append(vote.value)
+                vote_data = [vote.value, vote.vote.choice]
+                chain_hashes.append(vote_data)
             election_hashes.append(chain_hashes)
 
         election_active = []
         if len(election.active_tree.leaves) > 0:
             for vote in election.active_tree.leaves:
-                election_active.append(vote.value)
+                vote_data = [vote.value, vote.vote.choice]
+                election_active.append(vote_data)
 
         return_dict = {'name': election.name, 'id': election.id, 'options':election.options, 'chain':election_hashes, 'active':election_active}
 

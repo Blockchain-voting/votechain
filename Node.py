@@ -7,6 +7,7 @@ class Node:
     def __init__(self, vote_obj):
         # hashes vote data with sha256 algorithms
         # need to update so that the data being encrypted is more than a single integer
+        self.vote = vote_obj
         self.value = self.generate_hash_str(vote_obj)
         self.leftChild = None       # pointer to left child node
         self.rightChild = None      # pointer to right child node
