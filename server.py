@@ -51,7 +51,7 @@ def vote():
     # create Vote item for vote dictionary purely b/c I find it easier to work with objects that I can manipulate how I like
     # might remove this if it isn't repeated too much
     vote = Vote(vote_dict.get('election'), vote_dict.get('options'), vote_dict.get('userPublicKey'))
-    print len(Elections), vote.id
+    print "Vote created with id of %s with the choice of %s and public key of %s" % (vote.id, vote.choice, vote.public_key)
     election = Elections[vote.id]
     # print 'vote request:', vote, election.name
     vote_hash = election.vote(vote)
