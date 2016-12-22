@@ -23,7 +23,7 @@ def hello_world():
 @app.route('/elections', methods=['GET', 'POST'])
 def elections():
     if request.method == 'GET':
-        print 'returning %s Elections' % (len(Elections))
+        # print 'returning %s Elections' % (len(Elections))
         return jsonify(helper.convert_elections(Elections))
 
     elif request.method == 'POST':
@@ -34,7 +34,7 @@ def elections():
         el_handler = Handler(election_data['name'], (len(Elections) + 1), election_data['options'])
         Elections.append(el_handler)
         # need to get data out of this and create json to send back
-        print 'Election created with name %s and id of %s' % (el_handler.name, el_handler.id)
+        # print 'Election created with name %s and id of %s' % (el_handler.name, el_handler.id)
         return jsonify(helper.convert_elections(Elections))
 
 @app.route('/elections/<int:election_id>', methods=['GET'])
@@ -51,12 +51,12 @@ def vote():
     # create Vote item for vote dictionary purely b/c I find it easier to work with objects that I can manipulate how I like
     # might remove this if it isn't repeated too much
     vote = Vote(vote_dict.get('election'), vote_dict.get('options'), vote_dict.get('userPublicKey'))
-    print "Vote created for election with id of %s with the choice of %s and public key of %s" % (vote.id, vote.choice, vote.public_key)
+    # print "Vote created for election with id of %s with the choice of %s and public key of %s" % (vote.id, vote.choice, vote.public_key)
     election = Elections[vote.id]
     # print 'vote request:', vote, election.name
     vote_hash = election.vote(vote)
     return jsonify(vote_hash)
 
 if __name__ == '__main__':
-    # app.run(host='0.0.0.0',debug=True)
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0',debug=True)
+    # app.run(host='0.0.0.0')

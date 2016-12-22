@@ -25,19 +25,23 @@ class Helper():
     def return_election_data(self, election):
 
         election_hashes = []
+        election_pointers = []
         for chain in election.chain:
             chain_hashes = []
+            election_pointers.append([chain.prev_block,chain.proof_work])
             for vote in chain.leaves:
                 vote_data = [vote.value, vote.vote.choice]
                 chain_hashes.append(vote_data)
             election_hashes.append(chain_hashes)
+            print chain_hashes
 
         election_active = []
         if len(election.active_tree.leaves) > 0:
+            election_pointers.append([election.active_tree.prev_block,election.active_tree.proof_work])
             for vote in election.active_tree.leaves:
                 vote_data = [vote.value, vote.vote.choice]
                 election_active.append(vote_data)
 
-        return_dict = {'name': election.name, 'id': election.id, 'options':election.options, 'chain':election_hashes, 'active':election_active}
+        return_dict = {'name': election.name, 'id': election.id, 'options':election.options, 'chain':election_hashes, 'active':election_active, 'pointers':election_pointers}
 
         return return_dict

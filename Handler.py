@@ -8,12 +8,11 @@ hash_function = sha256
 # holds the chain and all the pointers
 class Handler:
     def __init__(self, name, el_id, options):
-        self.name = name            # name of the election
-        self.id = el_id             # id of the election
-        self.options = options      # choices for the election
-        self.chain = []             # list of trees
-        self.active_tree = Merkle() # pointer to open tree
-
+        self.name = name                # name of the election
+        self.id = el_id                 # id of the election
+        self.options = options          # choices for the election
+        self.chain = []                 # list of trees
+        self.active_tree = Merkle(True) # pointer to open tree, setting first block as root
 
     # add vote to tree
     # need to get the id of the tree
@@ -25,14 +24,14 @@ class Handler:
 
     # if tree is length of 10
     def cap_tree(self):
-        # hash it's values
-        hash_function(self.active_tree.get_values()).hexdigest()
         # build the tree
         print self.active_tree.build()
+        # add previous blocks hash to this block
+        # self.active_tree.prev_block = self.chain[-1].proof_work
         # inert into chain
         self.chain.append(self.active_tree)
         # create a new merkle tree
-        self.active_tree = Merkle()
+        self.active_tree = Merkle(self.active_tree.proof_work)
 
         print 'Number of blocks', len(self.chain)
 
