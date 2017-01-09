@@ -31,7 +31,7 @@ class Handler:
         # inert into chain
         self.chain.append(self.active_tree)
         # create a new merkle tree
-        self.active_tree = Merkle(self.active_tree.proof_work)
+        self.active_tree = Merkle(False, self.active_tree.proof_work)
 
         print 'Number of blocks', len(self.chain)
 

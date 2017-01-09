@@ -26,5 +26,5 @@ class Node:
         user_pub_key = vote_obj.public_key
         # print 'user public', user_pub_key
         output_str = hash_function(vote_str + random_hex_str + user_pub_key).hexdigest()
-        print 'vote hash', output_str
+        # print 'vote hash', output_str
         return output_str
