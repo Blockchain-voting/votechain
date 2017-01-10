@@ -4,8 +4,9 @@ hash_function = sha256
 
 class Merkle:
     def __init__(self, root, prev_block=''):
-        self.cap_size = 10
+        self.cap_size = 15
         self.leaves=[]
+        self.tree=[]
         self.prev_block = prev_block  # hash value of previous block
         self.proof_work = ''          # hash value of current block (simulated proof of work)
         print "root: %s" % root
@@ -18,7 +19,7 @@ class Merkle:
     def add_leaf(self, leaf):
         node = Node(leaf)
         self.leaves.append(node)
-        # print self.__length()
+        print self.__length()
 
         if self.__length() == self.cap_size:
             return "full", node.value
@@ -33,8 +34,13 @@ class Merkle:
 
     def build(self):
         self.proof_work = hash_function(''.join(i.value for i in self.leaves)).hexdigest()
-        return "building"
+        self.tree = list(self.leaves)
+
+        # for n in 
 
     # playing with python private functions
     def __length(self):
         return len(self.leaves)
+
+    def __build(self):
+        print 'built'
