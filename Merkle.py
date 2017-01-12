@@ -19,9 +19,9 @@ class Merkle:
     def add_leaf(self, leaf):
         node = Node(leaf)
         self.leaves.append(node)
-        print self.__length()
+        print len(self.leaves)
 
-        if self.__length() == self.cap_size:
+        if len(self.leaves) == self.cap_size:
             return "full", node.value
         else:
             return "growing", node.value
@@ -38,10 +38,6 @@ class Merkle:
 
         self.__build()
 
-    # playing with python private functions
-    def __length(self):
-        return len(self.leaves)
-
     def __build(self):
         # defining temp root and children nodes
         root = self.leaves[0]
@@ -52,17 +48,43 @@ class Merkle:
         print len(self.tree)
 
         # i - left | i + 1 - right
-        for i in range(1, self.__length(), 2):
+        for i in range(1, len(self.leaves), 2):
+            # setting variables for new left and right node
             left = self.leaves[i]
             right = self.leaves[i + 1]
             print "iteration %s" % i
-            for n in self.tree:
-                if n.empty() == True:
-                    n.left_child = left
-                    n.right_child = right
-                    left.parent = n
-                    right.parent = n
 
-                    self.tree.append(left)
-                    self.tree.append(right)
-                print len(self.tree)
+            # getting parent with traverse function
+            parent_id = self.__traverse()
+            print parent_id
+            parent = self.tree[parent_id]
+
+            # setting left and right child of parent
+            parent.set_left_child(left)
+            parent.set_right_child(right)
+
+            # setting parent of left and right children
+            left.set_parent(parent)
+            right.set_parent(parent)
+
+            # adding nodes to tree
+            self.tree.append(left)
+            self.tree.append(right)
+
+            print len(self.tree)
+
+        self.__print_tree()
+
+    # fancy word for a loop
+    def __traverse(self):
+        for i in range(len(self.tree)):
+            if self.tree[i].empty() == True:
+                print i
+                return i
+            else:
+                print "not this node, move along"
+
+    def __print_tree(self):
+        for i in range(len(self.tree)):
+            print "Node - %s" % i
+            self.tree[i].print_node()

@@ -32,8 +32,31 @@ class Node:
         else:
             return False
 
+    # getters
+    def get_children(self):
+        return self.left_child, self.right_child
+
+    def get_left_children(self):
+        return self.left_child
+
+    def get_right_children(self):
+        return self.right_child
+
+    def get_parent(self, new_parent):
+        return self.parent_node
+
+    # setters
+    def set_left_child(self, new_child):
+        self.left_child = new_child
+
+    def set_right_child(self, new_child):
+        self.right_child = new_child
+
+    def set_parent(self, new_parent):
+        self.parent_node = new_parent
+
     def print_node(self):
-        print "Left Child %s, Right Child %s, Parent Node %s, Sibling %s, Side %s" % (self.left_child, self.right_child, self.parent_node, self.sibling_node, self.side)
+        print "Left Child %s, Right Child %s, Parent Node %s" % (self.left_child, self.right_child, self.parent_node)
 
     def generate_hash_str(self, vote_obj):
         vote_str = str(vote_obj.id) + str(vote_obj.choice)
