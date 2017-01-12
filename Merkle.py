@@ -88,3 +88,6 @@ class Merkle:
         for i in range(len(self.tree)):
             print "Node - %s" % i
             self.tree[i].print_node()
+
+    def __verify_tree(self):
+        print 'validating'

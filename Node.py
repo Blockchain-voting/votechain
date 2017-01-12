@@ -56,7 +56,7 @@ class Node:
         self.parent_node = new_parent
 
     def print_node(self):
-        print "Left Child %s, Right Child %s, Parent Node %s" % (self.left_child, self.right_child, self.parent_node)
+        print "Left Child %s, Right Child %s, Parent Node %s, Vote Value %s" % (self.left_child, self.right_child, self.parent_node, self.vote.choice)
 
     def generate_hash_str(self, vote_obj):
         vote_str = str(vote_obj.id) + str(vote_obj.choice)

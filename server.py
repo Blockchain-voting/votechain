@@ -57,6 +57,13 @@ def vote():
     vote_hash = election.vote(vote)
     return jsonify(vote_hash)
 
+@app.route('/count/<int:count_id>', methods=['GET'])
+def count(count_id):
+    print "count_id - %s" % count_id
+    zerod_id = count_id - 1
+    Elections[zerod_id].count()
+    return jsonify(counting=True)
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)
     # app.run(host='0.0.0.0')

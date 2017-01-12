@@ -22,6 +22,9 @@ class Handler:
             self.cap_tree()
         return return_str[1] #return hash of vote
 
+    def count(self):
+        print "counting"
+
     # if tree is length of 10
     def cap_tree(self):
         # build the tree
@@ -39,7 +42,7 @@ class Handler:
     def change_name(self, new_name):
         self.name = new_name
 
-        # change the options for this elections
-        # takes the whole set of options, NOT a single one to add or remove
-        def change_options(self, new_opt):
-            self.options = new_opt
+    # change the options for this elections
+    # takes the whole set of options, NOT a single one to add or remove
+    def change_options(self, new_opt):
+        self.options = new_opt
