@@ -49,11 +49,13 @@ class Merkle:
         # appending root to tree
         self.tree.append(root)
 
+        print len(self.tree)
+
         # i - left | i + 1 - right
         for i in range(1, self.__length(), 2):
             left = self.leaves[i]
             right = self.leaves[i + 1]
-
+            print "iteration %s" % i
             for n in self.tree:
                 if n.empty() == True:
                     n.left_child = left
@@ -61,6 +63,6 @@ class Merkle:
                     left.parent = n
                     right.parent = n
 
-                self.tree.append(left)
-                self.tree.append(right)
-            print len(self.tree)
+                    self.tree.append(left)
+                    self.tree.append(right)
+                print len(self.tree)
