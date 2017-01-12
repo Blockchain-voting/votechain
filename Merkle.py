@@ -34,13 +34,33 @@ class Merkle:
 
     def build(self):
         self.proof_work = hash_function(''.join(i.value for i in self.leaves)).hexdigest()
-        self.tree = list(self.leaves)
+        # self.tree = list(self.leaves)
 
-        # for n in 
+        self.__build()
 
     # playing with python private functions
     def __length(self):
         return len(self.leaves)
 
     def __build(self):
-        print 'built'
+        # defining temp root and children nodes
+        root = self.leaves[0]
+
+        # appending root to tree
+        self.tree.append(root)
+
+        # i - left | i + 1 - right
+        for i in range(1, self.__length(), 2):
+            left = self.leaves[i]
+            right = self.leaves[i + 1]
+
+            for n in self.tree:
+                if n.empty() == True:
+                    n.left_child = left
+                    n.right_child = right
+                    left.parent = n
+                    right.parent = n
+
+                self.tree.append(left)
+                self.tree.append(right)
+            print len(self.tree)

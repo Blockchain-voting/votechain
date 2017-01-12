@@ -9,14 +9,31 @@ class Node:
         # need to update so that the data being encrypted is more than a single integer
         self.vote = vote_obj
         self.value = self.generate_hash_str(vote_obj)
-        self.leftChild = None       # pointer to left child node
-        self.rightChild = None      # pointer to right child node
-        self.parentNode = None      # pointer to parent node
-        self.siblingNode = None     # pointer to sibling node
+        self.left_child = None       # pointer to left child node
+        self.right_child = None      # pointer to right child node
+        self.parent_node = None      # pointer to parent node
         self.side = None            # whether this node is left or right
 
+    def empty(self):
+        if self.left_child == None and self.right_child == None:
+            return True
+        else:
+            return False
+
+    def empty_left(self):
+        if self.left_child == None:
+            return True
+        else:
+            return False
+
+    def empty_right(self):
+        if self.right_child == None:
+            return True
+        else:
+            return False
+
     def print_node(self):
-        print "Left Child %s, Right Child %s, Parent Node %s, Sibling %s, Side %s" % (self.leftChild, self.rightChild, self.parentNode, self.siblingNode, self.side)
+        print "Left Child %s, Right Child %s, Parent Node %s, Sibling %s, Side %s" % (self.left_child, self.right_child, self.parent_node, self.sibling_node, self.side)
 
     def generate_hash_str(self, vote_obj):
         vote_str = str(vote_obj.id) + str(vote_obj.choice)
