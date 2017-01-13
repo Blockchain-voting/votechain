@@ -5,11 +5,11 @@ hash_function = sha256
 class Merkle:
     def __init__(self, root, prev_block=''):
         self.cap_size = 15
-        self.leaves=[]
-        self.tree=[]
+        self.leaves = []
+        self.tree = []
         self.prev_block = prev_block  # hash value of previous block
         self.proof_work = ''          # hash value of current block (simulated proof of work)
-        print "root: %s" % root
+        
         if root:
             self.prev_block = hash_function(''.join(random.choice(string.hexdigits) for i in range(10))).hexdigest()
             print "random hash %s" % self.prev_block
@@ -38,6 +38,18 @@ class Merkle:
 
         self.__build()
 
+    def validate(self):
+        if self.proof_work == hash_function(''.join(i.value for i in self.leaves)).hexdigest():
+            return True
+        else:
+            return False
+
+    def count(self):
+        vote_list = []
+        for n in self.tree:
+            vote_list.append({'id':n.vote.id, 'choice':n.vote.choice, 'public key':n.vote.public_key})
+        return vote_list
+
     def __build(self):
         # defining temp root and children nodes
         root = self.leaves[0]
@@ -56,7 +68,6 @@ class Merkle:
 
             # getting parent with traverse function
             parent_id = self.__traverse()
-            print parent_id
             parent = self.tree[parent_id]
 
             # setting left and right child of parent

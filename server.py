@@ -61,8 +61,8 @@ def vote():
 def count(count_id):
     print "count_id - %s" % count_id
     zerod_id = count_id - 1
-    Elections[zerod_id].count()
-    return jsonify(counting=True)
+    verify = Elections[zerod_id].count()
+    return jsonify(verify)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)

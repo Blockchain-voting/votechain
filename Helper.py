@@ -33,7 +33,6 @@ class Helper():
                 vote_data = [vote.value, vote.vote.choice]
                 chain_hashes.append(vote_data)
             election_hashes.append(chain_hashes)
-            print [chain.prev_block,chain.proof_work]
 
         election_active = []
         if len(election.active_tree.leaves) > 0:

@@ -12,6 +12,7 @@ class Handler:
         self.id = el_id                 # id of the election
         self.options = options          # choices for the election
         self.chain = []                 # list of trees
+        self.snapshot = []              # snapshot of last time chain was counted
         self.active_tree = Merkle(True) # pointer to open tree, setting first block as root
 
     # add vote to tree
@@ -23,7 +24,49 @@ class Handler:
         return return_str[1] #return hash of vote
 
     def count(self):
-        print "counting"
+        """
+        1 - Check each block is linked correctly
+        2 - Compare current hashes against snapshot hashes
+            Take snapshot of block hashes
+        3 - In each block sum votes
+        """
+        chain = True
+        proof = True
+        hashes = True
+        votes = []
+
+        # verifying all proof of work is still valid
+        if len(self.chain) > 1:
+            for i in range(1, len(self.chain)):
+                if self.chain[i - 1].proof_work != self.chain[i].prev_block:
+                    chain = False
+        else:
+            print "chain is still too short to properly verify"
+
+        # verifying the node proof of work match their stored value
+        for b in self.chain:
+            if b.validate() == False:
+                proof = False
+
+        # verifying the tree values match stored values
+        if len(self.snapshot) > 1:
+            for i in range(len(self.snapshot)):
+                if self.snapshot[i] != self.chain[i].proof_work:
+                    hashes = False
+        else:
+            for b in self.chain:
+                self.snapshot.append(b.proof_work)
+            print self.snapshot
+
+        # if any of the checks return false then return false and empty votes
+        if chain != True or proof != True or hashes != True:
+            return False, votes
+        else:
+            # run through all trees and count their votes to return with True condition
+            for b in self.chain:
+                votes.append(b.count())
+            return {'secure':True,'votes':votes}
+
 
     # if tree is length of 10
     def cap_tree(self):
