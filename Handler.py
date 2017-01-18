@@ -51,8 +51,12 @@ class Handler:
         # verifying the tree values match stored values
         if len(self.snapshot) > 1:
             for i in range(len(self.snapshot)):
+                print "%s - snapshot:%s chain:%s" % (i, len(self.snapshot), len(self.chain))
                 if self.snapshot[i] != self.chain[i].proof_work:
                     hashes = False
+                    print "don't match"
+                else:
+                    print "hashes match"
         else:
             for b in self.chain:
                 self.snapshot.append(b.proof_work)
@@ -60,7 +64,7 @@ class Handler:
 
         # if any of the checks return false then return false and empty votes
         if chain != True or proof != True or hashes != True:
-            return False, votes
+            return {'secure':False,'votes':votes}
         else:
             # run through all trees and count their votes to return with True condition
             for b in self.chain:
