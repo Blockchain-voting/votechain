@@ -63,7 +63,7 @@ class Node:
         # print 'vote stringified', vote_str
         random_hex_str = ''.join(random.choice(string.hexdigits) for i in range(10))
         # print 'random hex', random_hex_str
-        user_pub_key = vote_obj.public_key
+        user_pub_key = vote_obj.signature
         # print 'user public', user_pub_key
         output_str = hash_function(vote_str + random_hex_str + user_pub_key).hexdigest()
         # print 'vote hash', output_str

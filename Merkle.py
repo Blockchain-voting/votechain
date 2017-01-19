@@ -9,7 +9,7 @@ class Merkle:
         self.tree = []
         self.prev_block = prev_block  # hash value of previous block
         self.proof_work = ''          # hash value of current block (simulated proof of work)
-        
+
         if root:
             self.prev_block = hash_function(''.join(random.choice(string.hexdigits) for i in range(10))).hexdigest()
             print "random hash %s" % self.prev_block
@@ -47,7 +47,7 @@ class Merkle:
     def count(self):
         vote_list = []
         for n in self.tree:
-            vote_list.append({'id':n.vote.id, 'choice':n.vote.choice, 'public key':n.vote.public_key})
+            vote_list.append({'id':n.vote.id, 'choice':n.vote.choice, 'signature':n.vote.signature})
         return vote_list
 
     def __build(self):
